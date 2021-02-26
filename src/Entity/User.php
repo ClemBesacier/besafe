@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -65,17 +66,40 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getUsername(): ?string
+    public function getUsername()
     {
         return $this->username;
     }
 
-    public function setUsername(string $username): self
+    // Arguments à corriger
+    public function setUsername($username)
     {
         $this->username = $username;
-
-        return $this;
     }
+
+    // public function getFirstname(): ?string
+    // {
+    //     return $this->firstname;
+    // }
+
+    // public function setFirstname(string $firstname): self
+    // {
+    //     $this->firstname = $firstname;
+
+    //     return $this;
+    // }
+
+    // public function getLastname(): ?string
+    // {
+    //     return $this->lastname;
+    // }
+
+    // public function setLastname(string $lastname): self
+    // {
+    //     $this->lastname = $lastname;
+
+    //     return $this;
+    // }
 
     public function getPassword(): ?string
     {

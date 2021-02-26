@@ -1,15 +1,31 @@
 {% extends 'base.html.twig' %}
+{# {% import './security/login.html.twig' as name %} #}
+
 
 {% block body %}
-    <h1>Création de compte</h1>
+	{# {% include 'base.html.twig' %} #}
+	<section class="createAccount">
+		<h1>Création de compte</h1>
 
-    {{ form_start(form)}}
+		{{ form_start(form)}}
 
-    {{ form_row(form.username, {'label': 'Nom','attr' : {'placeholder': 'Votre nom'}})}}
-    {{ form_row(form.email, {'label': 'Email','attr' : {'placeholder': 'Adresse email…'}})}}
-    {{ form_row(form.password, {'label': 'Mot de passe','attr' : {'placeholder': 'Votre mot de passe'}})}}
-    {{ form_row(form.confirm_password, {'label': 'Confirmation du mot de passe','attr' : {'placeholder': 'Répéter votre mot de passe'}})}}
+		{{ form_row(form.username, {'label': 'Nom','attr' : {'placeholder': 'Votre nom'}})}}
+		{{ form_row(form.email, {'label': 'Email','attr' : {'placeholder': 'Adresse email…'}})}}
+		{{ form_row(form.password, {'label': 'Mot de passe','attr' : {'placeholder': 'Votre mot de passe'}})}}
+		{{ form_row(form.confirm_password, {'label': 'Confirmation du mot de passe','attr' : {'placeholder': 'Répéter votre mot de passe'}})}}
 
-    <button type="submit" class="btn">Valider</button>
-    {{ form_end(form)}}
+		<button type="submit" class="btn">Valider</button>
+		{{ form_end(form)}}
+
+		<div class="account">
+			<p>Vous avez déjà un compte?</p>
+			<a href="{{ path('security_login') }}">Se connecter</a>
+		</div>
+		<div class="rgpd">
+			<p>En continuant, vous acceptez nos
+				<strong>Conditions générales</strong>
+				et notre
+				<strong>Politique de confidentialité</strong>. Ces informations sont collectées par BeSafe dans le but de créer votre compte, de gérer vos réservations, d'utiliser et d'améliorer nos services, et afin d'assurer la sécurité de notre plateforme. Vous avez des droits sur vos données personnelles et vous pouvez les exercer en contactant BeSafe par le biais de notre Formulaire de contact. Pour plus d'informations sur vos droits et la manière dont nous traitons vos données personnelles, veuillez consulter notre Politique de confidentialité.</p>
+		</div>
+	</section>
 {% endblock %}

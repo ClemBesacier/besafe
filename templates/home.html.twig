@@ -1,5 +1,25 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Homepage</h1>
+	{# {% include 'base.html.twig' %} #}
+
+	<section class="home">
+		<div class="welcome">
+			<h1>Bienvenue
+				{{ app.user.username }},</h1>
+			<p>Nous espérons que tu te sens en sécurité parmi nous !</p>
+		</div>
+
+		<div class="activeMode">
+			<h2>Mode actif !</h2>
+			<p>Le mode actif c’est quoi ? Cette fonctionnalité de l’application te permet d’être visible par les autres utilisateur.rice.s que tu sois à la recherche de quelqu’un pour te raccompagner ou que tu veuilles ramener quelqu’un à bon port.</p>
+			<p>Une fois la fonctionnalité activée, tu apparaitras automatiquement sur les cartes intéractives des autres utilisateur.rice.s qui pourront ainsi te contacter !</p>
+			<label class="switch">
+				<input type="checkbox">
+				<span class="slider round"></span>
+			</label>
+		</div>
+
+		<div id="mapid"></div>
+	</section>
 {% endblock %}

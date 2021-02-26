@@ -1,0 +1,238 @@
+@import './variables';
+@import '~bootstrap/scss/bootstrap';
+
+// VARIABLES
+$font: 'Open Sans', sans-serif;
+$purple: #961899;
+$grey: #313131;
+
+// GÉNÉRAL
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    font-family: $font;
+    color: $grey;
+    font-size: 13px;
+    padding: 0;
+    margin: 0;
+    // background-color: red;
+}
+
+h1 {
+    font-size: 25px;
+    font-weight: 700;
+    font-family: $font;
+}
+
+h2 {
+    font-size: 20px;
+    font-weight: 700;
+    font-family: $font;
+}
+
+.form-group {
+    margin-bottom: 0;
+    input {
+        border: none !important;
+        border-bottom: 1px solid $purple !important;
+        border-radius: inherit !important;
+        font-size: 13px !important;
+        color: $purple !important;
+        padding: 20px 0px !important;
+        margin-bottom: 25px;
+        &::placeholder {
+            font-size: 13px;
+            color: $purple !important;
+        }
+    }
+}
+
+button.btn {
+    background-color: $purple;
+    color: white;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.3px;
+    padding: 10px 40px;
+    transform: translateY(0);
+    transition: 0.5s ease;
+    &:hover {
+        transform: translateY(-3px);
+        color: white;
+        transition: 0.5s ease;
+    }
+}
+
+#mapid {
+    height: 300px;
+    width: calc(100vw - 0%);
+    left: calc(50% - 50vw);
+    bottom: 0;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+    input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    border: 1px solid $purple;
+    border-radius: 20px;
+    transition: .4s;
+    &::before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        border-radius: 20px;
+        left: 4px;
+        bottom: 3px;
+        background-color: $purple;
+        transition: .4s;
+    }
+    .round {
+        border-radius: 34px;
+        &::before {
+            content: "";
+            border-radius: 50%;
+        }
+    }
+}
+
+input:checked + .slider {
+    background-color: rgba($color: $purple, $alpha: 0.5);
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px $purple;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+strong {
+    color: $purple;
+    font-weight: 700;
+    position: relative;
+    &::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+a {
+    text-decoration: none;
+    &:hover {
+        text-decoration: none;
+    }
+}
+
+.rgpd {
+    font-size: 12px;
+    margin-top: 40px;
+}
+
+// HEADER
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    a {
+        color: $purple;
+    }
+}
+
+main {
+    padding: 0 20px 0;
+}
+
+section.createAccount, section.login {
+
+    height: 100vh;
+    h1 {
+        margin-bottom: 35px;
+    }
+    form {
+        margin-bottom: 6px;
+        .form-group {
+            label {
+                display: none;
+            }
+        }
+        button.btn {
+            margin: 20px 0 0;
+        }
+    }
+    .account {
+        font-size: 12px;
+        display: flex;
+        align-items: baseline;
+        a {
+            margin-left: 7px;
+            color: $purple;
+            font-weight: 600;
+            display: inline-block;
+            position: relative;
+            transition: 0.3s ease;
+            &::after {
+                content: "";
+                width: 0;
+                height: 1px;
+                background-color: $purple;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                transition: 0.3s ease;
+            }
+            &:hover {
+                transition: 0.3s ease;
+                &::after {
+                    width: 100%;
+                    transition: 0.3s ease;
+                }
+            }
+        }
+    }
+}
+
+
+section.home {
+    .welcome {
+        margin-bottom: 40px;
+        h1 {
+            font-size: 20px;
+            color: $grey;
+            margin-bottom: 5px;
+        }
+        p {
+            font-size: 12px;
+        }
+    }
+    .activeMode {
+        margin-bottom: 30px;
+    }
+}
