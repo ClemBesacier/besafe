@@ -17,4 +17,12 @@ class HomeController extends AbstractController
     {
         return $this->render('home.html.twig', []);
     }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     */
+    public function dashboard()
+    {
+        return $this->render('dashboard.html.twig', []);
+    }
 }

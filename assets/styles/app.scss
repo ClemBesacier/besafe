@@ -6,7 +6,9 @@ $font: 'Open Sans', sans-serif;
 $purple: #961899;
 $grey: #313131;
 
-// GÉNÉRAL
+//-----------------------//
+//------- GÉNÉRAL -------//
+//-----------------------//
 
 body {
     display: flex;
@@ -17,7 +19,6 @@ body {
     font-size: 13px;
     padding: 0;
     margin: 0;
-    // background-color: red;
 }
 
 h1 {
@@ -65,12 +66,45 @@ button.btn {
     }
 }
 
-#mapid {
-    height: 300px;
-    width: calc(100vw - 0%);
-    left: calc(50% - 50vw);
-    bottom: 0;
+//-----------------------//
+//--------- MAP ---------//
+//-----------------------//
+.coordinates {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    bottom: 40px;
+    left: 10px;
+    padding: 5px 10px;
+    margin: 0;
+    font-size: 11px;
+    line-height: 18px;
+    border-radius: 3px;
+    display: none;
 }
+.mapboxgl-popup {
+    max-width: 400px;
+    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+.mapboxgl-popup-content {
+    padding: 15px;
+    min-width: 170px;
+    .name {
+        font-size: 17px;
+        margin-bottom: 10px;
+        display: inline-block;
+        color: $purple;
+        font-weight: 700;
+    }
+    .numero {
+        color: $purple;
+    }
+}
+
+//-----------------------//
+//------ BTN RADIO ------//
+//-----------------------//
 
 .switch {
     position: relative;
@@ -154,7 +188,9 @@ a {
     margin-top: 40px;
 }
 
-// HEADER
+//-----------------------//
+//------- HEADER --------//
+//-----------------------//
 header {
     display: flex;
     align-items: center;
@@ -162,6 +198,7 @@ header {
     padding: 20px;
     a {
         color: $purple;
+        font-weight: 700;
     }
 }
 
@@ -169,6 +206,11 @@ main {
     padding: 0 20px 0;
 }
 
+
+
+//-----------------------//
+//------- ACCOUNT -------//
+//-----------------------//
 section.createAccount, section.login {
 
     height: 100vh;
@@ -219,8 +261,66 @@ section.createAccount, section.login {
     }
 }
 
-
+//-----------------------//
+//--------- HOME --------//
+//-----------------------//
 section.home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100vh;
+    header {
+        margin-bottom: 120px;
+        display: flex;
+        flex-direction: column;
+        img {
+            width: 150px;
+        }
+        h1 {
+            text-align: center;
+            margin: 0;
+        }
+    }
+    .connexion {
+        text-align: center;
+        .login {
+            text-decoration: none;
+            border: 1px solid $purple;
+            padding: 10px 20px;
+            background-color: $purple;
+            color: white;
+            border-radius: 3px;
+            margin-bottom: 4px;
+            display: inline-block;
+            transition: 0.3s ease;
+            &:hover {
+                background-color: inherit;
+                color: $purple;
+                transition: 0.3s ease;
+            }
+        }
+        .signIn {
+            text-decoration: none;
+            border: 1px solid $purple;
+            padding: 10px 20px;
+            color: $purple;
+            display: inline-block;
+            border-radius: 3px;
+            transition: 0.3s ease;
+            &:hover {
+                background-color: $purple;
+                color: white;
+                transition: 0.3s ease;
+            }
+        }
+    }
+}
+
+//-----------------------//
+//------ DASHBOARD ------//
+//-----------------------//
+section.dashboard {
     .welcome {
         margin-bottom: 40px;
         h1 {
@@ -236,3 +336,4 @@ section.home {
         margin-bottom: 30px;
     }
 }
+

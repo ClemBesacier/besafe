@@ -22,6 +22,7 @@ security:
                 login_path: security_login
                 # C'est l'endroit que je dois appeler pour vérifier les informations d'un formulaire de login
                 check_path: security_login
+                default_target_path: dashboard
 
             logout: 
                 path: security_logout
