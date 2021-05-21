@@ -5,6 +5,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
 bsCustomFileInput.init();
 
 
+// Init map
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2xzcm0iLCJhIjoiY2ttcnVvMjF6MGJpOTJvcG1xcnhwcTl2cyJ9.SS99A4Grt_tcHfIbpDYEiQ';
 var map = new mapboxgl.Map({
     container: 'map', // container id
@@ -13,29 +14,33 @@ var map = new mapboxgl.Map({
     zoom: 12 // starting zoom
 });
 
+// Global vars
 var long;
 var lat;
 
+// Handle marker click event
 function onMarkerClick(e) {
-    console.log('click', e.features);
-
+    // Get coordinates
     var coordinates = e.features[0].geometry.coordinates.slice();
     var description = e.features[0].properties.description;
 
-    // Ensure that if the map is zoomed out such that multiple
-    // copies of the feature are visible, the popup appears
-    // over the copy being pointed to.
+    // Calc coordinates
     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
     }
 
+    // Inject popup on map
     new mapboxgl.Popup()
         .setLngLat(coordinates)
         .setHTML(description)
         .addTo(map);
 }
 
-//----- Début pulsing dot -----//
+
+
+//-----------------------------//
+//----- Start pulsing dot -----//
+//-----------------------------//
 
 var size = 200;
 
@@ -107,14 +112,18 @@ var pulsingDot = {
     }
 };
 
-//----- Fin pulsing dot -----//
-
 map.on('load', function () {
     map.addImage('pulsing-dot', pulsingDot, { pixelRatio: 2 });
 });
 
+//-----------------------------//
+//------ End pulsing dot ------//
+//-----------------------------//
 
 
+
+
+// Get my position
 function maPosition(position) {
     long = position.coords.longitude;
     lat = position.coords.latitude;
@@ -163,18 +172,24 @@ function maPosition(position) {
             'icon-allow-overlap': true
         }
     });
+
+    // Handle marker click
     map.on('click', 'places', onMarkerClick);
 
+    // Handle marker mouse enter
     map.on('mouseenter', 'places', function () {
         map.getCanvas().style.cursor = 'pointer';
     });
 
+    // Handle marker mouse leave
     map.on('mouseleave', 'places', function () {
         map.getCanvas().style.cursor = '';
     });
 
 }
 
+
+// Get random position X
 function positionX(pos) {
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = Math.random() * 0.1 - 0.1 / 2 + pos.coords.latitude;
@@ -221,6 +236,7 @@ function positionX(pos) {
     });
 }
 
+// Get random position Y
 function positionY(pos) {
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = Math.random() * 0.1 - 0.1 / 2 + pos.coords.latitude;
@@ -267,6 +283,8 @@ function positionY(pos) {
     });
 }
 
+
+// Get random position Z
 function positionZ(pos) {
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = pos.coords.latitude;
@@ -312,6 +330,7 @@ function positionZ(pos) {
     });
 }
 
+// Get random position 
 function positionRandom(pos) {
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = pos.coords.latitude;
@@ -357,9 +376,14 @@ function positionRandom(pos) {
     });
 }
 
+
+// Wait map load events
 map.on('load', function () {
+    // Can use geolocation navigator
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(maPosition);
+
+        // Defer callback
         function defer(cb) {
             setTimeout(() => {
                 cb();
