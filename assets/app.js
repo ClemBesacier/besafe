@@ -1,61 +1,8 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
-
-// any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.scss';
 
-// start the Stimulus application
 import './bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
 bsCustomFileInput.init();
-
-// console.log('Hello Webpack Encore! Edit me in assets/app.js');
-
-// window.onload = function () {
-//     console.log('page chargée');
-//     var mymap = L.map('mapid').setView([44.833363, -0.606922], 16);
-
-//     var mapboxUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}';
-//     var mapboxAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
-//     var mapboxToken = 'pk.eyJ1IjoiY2xzcm0iLCJhIjoiY2sxcWUzZzQyMHo1NDNob2lsY3MybGxpbyJ9.gVODmq18ES7LctAexLSiJA';
-
-//     var tileStreets = L.tileLayer(mapboxUrl, {
-//         attribution: mapboxAttr,
-//         maxZoom: 18,
-//         id: 'mapbox/streets-v11',
-//         tileSize: 512,
-//         zoomOffset: -1,
-//         accessToken: mapboxToken
-//     });
-//     tileStreets.addTo(mymap);
-
-
-
-
-//     var marker = L.marker([44.833363, -0.606922]).addTo(mymap);
-//     marker.bindPopup("<b>Hello world!</b><br>I am a popup.");
-
-//     var popup = L.popup();
-
-//     function onMapClick(e) {
-//         popup
-//             .setLatLng(e.latlng)
-//             .setContent("You clicked the map at " + e.latlng.toString())
-//             .openOn(mymap);
-//     }
-
-//     mymap.on('click', onMapClick);
-
-
-
-
-
-
-// }
 
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2xzcm0iLCJhIjoiY2ttcnVvMjF6MGJpOTJvcG1xcnhwcTl2cyJ9.SS99A4Grt_tcHfIbpDYEiQ';
@@ -63,11 +10,30 @@ var map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
     center: [-0.6485436, 44.8247036], // starting position [lng, lat]
-    zoom: 13 // starting zoom
+    zoom: 12 // starting zoom
 });
 
 var long;
 var lat;
+
+function onMarkerClick(e) {
+    console.log('click', e.features);
+
+    var coordinates = e.features[0].geometry.coordinates.slice();
+    var description = e.features[0].properties.description;
+
+    // Ensure that if the map is zoomed out such that multiple
+    // copies of the feature are visible, the popup appears
+    // over the copy being pointed to.
+    while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+        coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+    }
+
+    new mapboxgl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(description)
+        .addTo(map);
+}
 
 //----- Début pulsing dot -----//
 
@@ -150,15 +116,15 @@ map.on('load', function () {
 
 
 function maPosition(position) {
-    // var infopos = "Position déterminée :\n";
-    // infopos += "Latitude : " + position.coords.latitude + "\n";
-    // infopos += "Longitude: " + position.coords.longitude + "\n";
-    // document.getElementById("infoposition").innerHTML = infopos;
-    // console.log(position.coords.longitude)
-    // console.log(position.coords.latitude)
     long = position.coords.longitude;
     lat = position.coords.latitude;
-    console.log(long, lat);
+    map.flyTo({
+        center: [
+            position.coords.longitude,
+            position.coords.latitude,
+        ],
+    });
+
     map.addSource('mysource', {
         'type': 'geojson',
         'data': {
@@ -197,27 +163,12 @@ function maPosition(position) {
             'icon-allow-overlap': true
         }
     });
-    map.on('click', 'places', function (e) {
-        var coordinates = e.features[0].geometry.coordinates.slice();
-        var description = e.features[0].properties.description;
+    map.on('click', 'places', onMarkerClick);
 
-        // Ensure that if the map is zoomed out such that multiple
-        // copies of the feature are visible, the popup appears
-        // over the copy being pointed to.
-        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-        }
-
-        new mapboxgl.Popup()
-            .setLngLat(coordinates)
-            .setHTML(description)
-            .addTo(map);
-    });
     map.on('mouseenter', 'places', function () {
         map.getCanvas().style.cursor = 'pointer';
     });
 
-    // Change it back to a pointer when it leaves.
     map.on('mouseleave', 'places', function () {
         map.getCanvas().style.cursor = '';
     });
@@ -225,20 +176,9 @@ function maPosition(position) {
 }
 
 function positionX(pos) {
-    // var infopos = "Position déterminée :\n";
-    // infopos += "Latitude : " + position.coords.latitude + "\n";
-    // infopos += "Longitude: " + position.coords.longitude + "\n";
-    // document.getElementById("infoposition").innerHTML = infopos;
-    // console.log(position.coords.longitude)
-    // console.log(position.coords.latitude)
-    // let i = 0;
-    // while (i < 7) {
-
-    long = pos.coords.longitude;
+    long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = Math.random() * 0.1 - 0.1 / 2 + pos.coords.latitude;
-    console.log(long, lat);
-    //     i++;
-    // }
+
     map.addSource('mysourceX', {
         'type': 'geojson',
         'data': {
@@ -248,7 +188,7 @@ function positionX(pos) {
                     'type': 'Feature',
                     'properties': {
                         'description':
-                            '<strong>Clémentine</strong><p><a href="tel:+33667528803" target="_blank" title="Opens in a new window">Numéro de téléphone</a> <strong>Destination:</strong>Mérignac</br><strong>Conducteu.rice</p>',
+                            '<div class="name">Juliette</div><div class="dest">Destination : Mérignac Centre</div><strong>Passagère</p><a class="numero" href="tel:+33667528803" target="_blank" title="Opens in a new window">Me contacter</a>',
                         'icon': 'pitch'
                     },
                     'geometry': {
@@ -261,63 +201,30 @@ function positionX(pos) {
     });
 
     map.addLayer({
-        'id': 'po',
+        'id': 'placesX',
         'type': 'symbol',
         'source': 'mysourceX',
         'layout': {
-            'icon-image': 'pulsing-dot'
+            'icon-image': 'pulsing-dot',
+            'icon-allow-overlap': true
         }
     });
-    // map.addLayer({
-    //     'id': 'place',
-    //     'type': 'symbol',
-    //     'source': 'mysourceX',
-    //     'layout': {
-    //         'icon-image': '{icon}-15',
-    //         'icon-allow-overlap': true
-    //     }
-    // });
-    // map.on('click', 'place', function (e) {
-    //     var coordinates = e.features[0].geometry.coordinates.slice();
-    //     var description = e.features[0].properties.description;
 
-    //     // Ensure that if the map is zoomed out such that multiple
-    //     // copies of the feature are visible, the popup appears
-    //     // over the copy being pointed to.
-    //     while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-    //         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-    //     }
+    map.on('click', 'placesX', onMarkerClick);
 
-    //     new mapboxgl.Popup()
-    //         .setLngLat(coordinates)
-    //         .setHTML(description)
-    //         .addTo(map);
-    // });
-    // map.on('mouseenter', 'place', function () {
-    //     map.getCanvas().style.cursor = 'pointer';
-    // });
+    map.on('mouseenter', 'placesX', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
 
-    // // Change it back to a pointer when it leaves.
-    // map.on('mouseleave', 'place', function () {
-    //     map.getCanvas().style.cursor = '';
-    // });
+    map.on('mouseleave', 'placesX', function () {
+        map.getCanvas().style.cursor = '';
+    });
 }
 
 function positionY(pos) {
-    // var infopos = "Position déterminée :\n";
-    // infopos += "Latitude : " + position.coords.latitude + "\n";
-    // infopos += "Longitude: " + position.coords.longitude + "\n";
-    // document.getElementById("infoposition").innerHTML = infopos;
-    // console.log(position.coords.longitude)
-    // console.log(position.coords.latitude)
-    // let i = 0;
-    // while (i < 7) {
-
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
-    lat = pos.coords.latitude;
-    console.log(long, lat);
-    //     i++;
-    // }
+    lat = Math.random() * 0.1 - 0.1 / 2 + pos.coords.latitude;
+
     map.addSource('poi', {
         'type': 'geojson',
         'data': {
@@ -327,7 +234,7 @@ function positionY(pos) {
                     'type': 'Feature',
                     'properties': {
                         'description':
-                            '<strong>Manon</strong><p><a href="tel:+33667528803" target="_blank" title="Opens in a new window">Numéro de téléphone</a> <strong>Destination:</strong>Mérignac</br><strong>Conducteu.rice</p>',
+                            '<div class="name">Manon</div><div class="dest">Destination : Pessac</div><strong>Passagère</p><a class="numero" href="tel:+33667528803" target="_blank" title="Opens in a new window">Me contacter</a>',
                         'icon': 'theatre'
                     },
                     'geometry': {
@@ -340,30 +247,30 @@ function positionY(pos) {
     });
 
     map.addLayer({
-        'id': 'poi',
+        'id': 'placesY',
         'type': 'symbol',
         'source': 'poi',
         'layout': {
             'icon-image': 'pulsing-dot'
         }
     });
+
+
+    map.on('click', 'placesY', onMarkerClick);
+
+    map.on('mouseenter', 'placesY', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'placesY', function () {
+        map.getCanvas().style.cursor = '';
+    });
 }
 
 function positionZ(pos) {
-    // var infopos = "Position déterminée :\n";
-    // infopos += "Latitude : " + position.coords.latitude + "\n";
-    // infopos += "Longitude: " + position.coords.longitude + "\n";
-    // document.getElementById("infoposition").innerHTML = infopos;
-    // console.log(position.coords.longitude)
-    // console.log(position.coords.latitude)
-    // let i = 0;
-    // while (i < 7) {
-
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = pos.coords.latitude;
-    console.log(long, lat);
-    //     i++;
-    // }
+
     map.addSource('poin', {
         'type': 'geojson',
         'data': {
@@ -373,7 +280,7 @@ function positionZ(pos) {
                     'type': 'Feature',
                     'properties': {
                         'description':
-                            '<strong>Juliette</strong><p><a href="tel:+33667528803" target="_blank" title="Opens in a new window">Numéro de téléphone</a> <strong>Destination:</strong>Mérignac</br><strong>Conducteu.rice</p>',
+                            '<div class="name">Jeanne</div><div class="dest">Destination : Bordeaux Caudéran</div><strong>Passagère</p><a class="numero" href="tel:+33667528803" target="_blank" title="Opens in a new window">Me contacter</a>',
                         'icon': 'theatre'
                     },
                     'geometry': {
@@ -386,31 +293,30 @@ function positionZ(pos) {
     });
 
     map.addLayer({
-        'id': 'poin',
+        'id': 'placesZ',
         'type': 'symbol',
         'source': 'poin',
         'layout': {
             'icon-image': 'pulsing-dot'
         }
     });
+
+    map.on('click', 'placesZ', onMarkerClick);
+
+    map.on('mouseenter', 'placesZ', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'placesZ', function () {
+        map.getCanvas().style.cursor = '';
+    });
 }
 
 function positionRandom(pos) {
-    // var infopos = "Position déterminée :\n";
-    // infopos += "Latitude : " + position.coords.latitude + "\n";
-    // infopos += "Longitude: " + position.coords.longitude + "\n";
-    // document.getElementById("infoposition").innerHTML = infopos;
-    // console.log(position.coords.longitude)
-    // console.log(position.coords.latitude)
-    // let i = 0;
-    // while (i < 7) {
-
     long = Math.random() * 0.1 - 0.1 / 2 + pos.coords.longitude;
     lat = pos.coords.latitude;
-    console.log(long, lat);
-    //     i++;
-    // }
-    map.addSource('mypoint', {
+
+    map.addSource('placesSource', {
         'type': 'geojson',
         'data': {
             'type': 'FeatureCollection',
@@ -419,7 +325,7 @@ function positionRandom(pos) {
                     'type': 'Feature',
                     'properties': {
                         'description':
-                            '<strong>Jeanne</strong><p><a href="tel:+33667528803" target="_blank" title="Opens in a new window">Numéro de téléphone</a> <strong>Destination:</strong>Mérignac</br><strong>Conducteu.rice</p>',
+                            '<div class="name">Géraldine</div><div class="dest">Destination : Bordeaux Centre</div><strong>Passagère</p><a class="numero" href="tel:+33667528803" target="_blank" title="Opens in a new window">Me contacter</a>',
                         'icon': 'theatre'
                     },
                     'geometry': {
@@ -432,27 +338,48 @@ function positionRandom(pos) {
     });
 
     map.addLayer({
-        'id': 'mypoint',
+        'id': 'placesR',
         'type': 'symbol',
-        'source': 'mypoint',
+        'source': 'placesSource',
         'layout': {
             'icon-image': 'pulsing-dot'
         }
     });
+
+    map.on('click', 'placesR', onMarkerClick);
+
+    map.on('mouseenter', 'placesR', function () {
+        map.getCanvas().style.cursor = 'pointer';
+    });
+
+    map.on('mouseleave', 'placesR', function () {
+        map.getCanvas().style.cursor = '';
+    });
 }
 
+map.on('load', function () {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(maPosition);
+        function defer(cb) {
+            setTimeout(() => {
+                cb();
+            }, 500);
+        }
 
-if (navigator.geolocation) {
-    // geolocalisation supportée
-    // navigator.geolocation.getCurrentPosition(longitudeGeoloc, console.error);
-    navigator.geolocation.getCurrentPosition(maPosition);
-    navigator.geolocation.getCurrentPosition(positionX);
-    navigator.geolocation.getCurrentPosition(positionY);
-    navigator.geolocation.getCurrentPosition(positionZ);
-    navigator.geolocation.getCurrentPosition(positionRandom);
-
-    console.log("maPosition");
-} else {
-    // geolocalisation non supportée
-    alert('Désolée votre navigateur ne vous permet pas d\'être géolocalisés');
-}
+        defer(() => {
+            navigator.geolocation.getCurrentPosition(positionX);
+            defer(() => {
+                navigator.geolocation.getCurrentPosition(positionY);
+            });
+            defer(() => {
+                navigator.geolocation.getCurrentPosition(positionZ);
+            });
+            defer(() => {
+                navigator.geolocation.getCurrentPosition(positionRandom);
+            });
+        });
+    } else {
+        // geolocalisation non supportée
+        alert('Désolée votre navigateur ne vous permet pas d\'être géolocalisés');
+    }
+});

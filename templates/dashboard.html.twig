@@ -15,7 +15,7 @@
 			<p>Le mode actif c’est quoi ? Cette fonctionnalité de l’application te permet d’être visible par les autres utilisateur.rice.s que tu sois à la recherche de quelqu’un pour te raccompagner ou que tu veuilles ramener quelqu’un à bon port.</p>
 			<p>Une fois la fonctionnalité activée, tu apparaitras automatiquement sur les cartes intéractives des autres utilisateur.rice.s qui pourront ainsi te contacter !</p>
 			<label class="switch">
-				<input type="checkbox">
+				<input type="checkbox" id="switch">
 				<span class="slider round"></span>
 			</label>
 		</div>
@@ -27,4 +27,19 @@
 		<div id="map" style="width: 100%; height: 400px;"></div>
 		<pre id="coordinates" class="coordinates"></pre>
 	</div>
+
+	<script>
+		var mapmb = document.getElementsByClassName('map');
+var mb = mapmb[0];
+mb.style.opacity = '0';
+var switchEl = document.getElementById('switch');
+switchEl.addEventListener('change', function (e) {
+
+if (! mb) {
+return false;
+}
+
+mb.style.opacity = e.currentTarget.checked ? '1' : '0';
+})
+	</script>
 {% endblock %}
