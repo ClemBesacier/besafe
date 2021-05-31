@@ -200,9 +200,22 @@ header {
     align-items: center;
     justify-content: space-between;
     padding: 20px;
+    .topLogo {
+        width: 60px;
+    }
     a {
         color: $purple;
         font-weight: 700;
+        border: 1px solid $purple;
+        padding: 5px 10px;
+        border-radius: 3px;
+        transform: translateY(0);
+        transition: 0.3s ease;
+        &:hover {
+            color: $purple;
+            transform: translateY(-3px);
+            transition: 0.3s ease;
+        }
     }
 }
 
@@ -280,6 +293,7 @@ section.home {
         flex-direction: column;
         img {
             width: 150px;
+            margin-bottom: 20px;
         }
         h1 {
             text-align: center;
@@ -297,10 +311,10 @@ section.home {
             border-radius: 3px;
             margin-bottom: 4px;
             display: inline-block;
+            transform: translateY(0);
             transition: 0.3s ease;
             &:hover {
-                background-color: inherit;
-                color: $purple;
+                transform: translateY(-3px);
                 transition: 0.3s ease;
             }
         }
@@ -311,10 +325,10 @@ section.home {
             color: $purple;
             display: inline-block;
             border-radius: 3px;
+            transform: translateY(0);
             transition: 0.3s ease;
             &:hover {
-                background-color: $purple;
-                color: white;
+                transform: translateY(-3px);
                 transition: 0.3s ease;
             }
         }

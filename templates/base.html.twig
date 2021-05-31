@@ -13,13 +13,12 @@
 
 			<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i&display=swap" rel="stylesheet"/>
-			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 	</head>
 	<body>
 		<header class="header">
-			<img src="{{ asset('build/images/logo.54e1f2c9.png') }}" alt="beSafe logo">
+			<img src="{{ asset('build/images/logo.661fac0c.png') }}" class="topLogo" alt="beSafe logo">
 			{% if not app.user %}
 				<a href="{{ path('security_login') }}">Me connecter</a>
 			{% else %}
