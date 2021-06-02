@@ -292,24 +292,29 @@ section.home {
         display: flex;
         flex-direction: column;
         img {
-            width: 150px;
+            width: 300px;
             margin-bottom: 20px;
         }
         h1 {
             text-align: center;
             margin: 0;
+            font-size: 85px;
         }
     }
     .connexion {
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         .login {
             text-decoration: none;
             border: 1px solid $purple;
-            padding: 10px 20px;
+            padding: 20px 40px;
             background-color: $purple;
             color: white;
-            border-radius: 3px;
-            margin-bottom: 4px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 40px;
             display: inline-block;
             transform: translateY(0);
             transition: 0.3s ease;
@@ -320,11 +325,11 @@ section.home {
         }
         .signIn {
             text-decoration: none;
-            border: 1px solid $purple;
-            padding: 10px 20px;
+            padding: 20px 40px;
             color: $purple;
             display: inline-block;
-            border-radius: 3px;
+            border-radius: 10px;
+            font-size: 40px;
             transform: translateY(0);
             transition: 0.3s ease;
             &:hover {
