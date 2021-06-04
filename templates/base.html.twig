@@ -13,12 +13,15 @@
 
 			<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
 			<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,500,500i,600,600i&display=swap" rel="stylesheet"/>
+			<link rel="manifest" href="{{ asset('build/manifest.webmanifest') }}">
+			<link rel="apple-touch-icon" href="{{ asset('build/logo.png') }}">
+			<meta name="theme-color" content="#961899"/>
 			{{ encore_entry_link_tags('app') }}
 		{% endblock %}
 	</head>
 	<body>
 		<header class="header">
-			<img src="{{ asset('build/images/logo.661fac0c.png') }}" class="topLogo" alt="beSafe logo">
+			<img src="{{ asset('build/logo.png') }}" class="topLogo" alt="beSafe logo">
 			{% if not app.user %}
 				<a href="{{ path('security_login') }}">Me connecter</a>
 			{% else %}
@@ -34,6 +37,7 @@
 	{% block javascripts %}
 		<script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="/service-worker.js" defer=""></script>
 		{{ encore_entry_script_tags('app') }}
 	{% endblock %}
 </html>

@@ -1,0 +1,23 @@
+{
+    "short_name": "Besafe",
+    "name": "Besafe",
+    "description": "Rentre en sécurité",
+    "icons": [
+        {
+            "src": "/build/logo512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/build/logo192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "start_url": "/dashboard",
+    "background_color": "#961899",
+    "theme_color": "#961899",
+    "display": "fullscreen"
+}

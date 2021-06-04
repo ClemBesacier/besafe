@@ -294,11 +294,17 @@ section.home {
         img {
             width: 300px;
             margin-bottom: 20px;
+            @media (min-width: 575px) {
+                width: 130px;
+            }
         }
         h1 {
             text-align: center;
             margin: 0;
             font-size: 85px;
+            @media (min-width: 575px) {
+                font-size: 35px;
+            }
         }
     }
     .connexion {
@@ -318,6 +324,10 @@ section.home {
             display: inline-block;
             transform: translateY(0);
             transition: 0.3s ease;
+            @media (min-width: 575px) {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
             &:hover {
                 transform: translateY(-3px);
                 transition: 0.3s ease;
@@ -332,6 +342,10 @@ section.home {
             font-size: 40px;
             transform: translateY(0);
             transition: 0.3s ease;
+            @media (min-width: 575px) {
+                font-size: 20px;
+                padding: 10px 20px;
+            }
             &:hover {
                 transform: translateY(-3px);
                 transition: 0.3s ease;

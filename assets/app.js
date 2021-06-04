@@ -4,6 +4,25 @@ import './bootstrap';
 import bsCustomFileInput from 'bs-custom-file-input';
 bsCustomFileInput.init();
 
+// Declare service worker
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+        navigator.serviceWorker.register('service-worker.js', {
+            scope: '.'
+        }).then(function (registration) {
+            // Registration was successful
+            console.log('Registered!');
+        }, function (err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+        }).catch(function (err) {
+            console.log(err);
+        });
+    });
+} else {
+    console.log('service worker is not supported');
+}
+
 
 // Init map
 mapboxgl.accessToken = 'pk.eyJ1IjoiY2xzcm0iLCJhIjoiY2ttcnVvMjF6MGJpOTJvcG1xcnhwcTl2cyJ9.SS99A4Grt_tcHfIbpDYEiQ';
